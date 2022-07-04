@@ -1,0 +1,14 @@
+- hosts: common
+  tasks:
+    - name: install git
+      ansible.builtin.apt:
+        name: git
+        state: present
+      become: true
+      tags: [git]
+
+    - name: update apt
+      ansible.builtin.apt:
+        update_cache: true
+      become: true
+      tags: [update]
