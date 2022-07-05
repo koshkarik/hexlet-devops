@@ -1,0 +1,13 @@
+events {
+
+}
+
+http {
+  server {
+    listen 80 default_server;
+    location {
+      root {{ root_dir }};
+    }
+    index index.html;
+  }
+}
