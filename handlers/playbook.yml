@@ -1,0 +1,36 @@
+- hosts: common
+  tasks:
+    - name: install nginx
+      ansible.builtin.apt:
+        name: nginx
+        state: latest
+      become: true
+
+    - name: copy index.html
+      ansible.builtin.copy:
+        src: ./index.html
+        dest: /usr/share/nginx/html/index.html
+        owner: yarik
+        mode: '0755'
+      become: true
+
+    - name: copy nginx conf
+      ansible.builtin.copy:
+        src: ./nginx.conf
+        dest: /etc/nginx/nginx.conf
+        owner: yarik
+        mode: '0755'
+      become: true
+      notify:
+        - restart nginx
+
+  handlers: 
+    - name: restart nginx
+      ansible.builtin.service:
+        name: nginx
+        state: reloaded
+      become: true  
+
+
+
+      
