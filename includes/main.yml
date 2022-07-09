@@ -1,0 +1,11 @@
+- hosts: localhost
+  
+  tasks:
+    - ansible.builtin.debug:
+        msg: play1
+
+- name: Include a play after another play
+  ansible.builtin.import_playbook: git_setup.yml 
+
+- name: Set variables on an imported playbook
+  ansible.builtin.import_playbook: nginx_setup.yml
