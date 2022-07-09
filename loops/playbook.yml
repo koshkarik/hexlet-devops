@@ -1,0 +1,36 @@
+- hosts: common
+  tasks:
+    - name: install git
+      ansible.builtin.apt:
+        name: git
+        state: latest
+      become: true  
+
+    - name: add group
+      ansible.builtin.group:
+        name: wheel
+        state: present
+      become: true  
+
+    - name: add users
+      ansible.builtin.user:
+        name: "{{item.name}}"
+        group: "{{item.groups}}"
+        state: present
+      loop:
+        - { name: jaime, groups: wheel }
+        - { name: sansa, groups: wheel }
+        - { name: robert, groups: wheel }
+        - { name: yarik, groups: wheel }
+      become: true
+
+    - name: git user configs
+      copy:
+        src: "./files/{{item}}_git"
+        dest: "/home/{{item}}/.gitconfig"
+      loop:
+        - jaime
+        - sansa
+        - robert
+        - yarik
+      become: true  

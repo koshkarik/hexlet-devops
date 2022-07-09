@@ -1,0 +1,7 @@
+root_dir: /var/tmp/www
+server_name: Yarik
+nginx_port: 80
+users:
+  - jaime
+  - sansa
+  - robert
