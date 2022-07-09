@@ -1,0 +1,4 @@
+root_dir: /var/tmp/www
+server_name: Yarik
+nginx_port: 80
+some_string: This is server!
