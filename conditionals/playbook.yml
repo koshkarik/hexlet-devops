@@ -1,0 +1,6 @@
+- hosts: all
+  tasks:
+    - shell: echo "lets test"
+
+    - shell: echo "check"
+      when: ansible_distribution == "Ubuntu"
