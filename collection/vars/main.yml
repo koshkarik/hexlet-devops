@@ -1,0 +1,8 @@
+postgresql_databases:
+  - name: yarik_fasify_blog
+postgresql_users:
+  - name: yarik
+    password: yarik2105
+db_name: yarik_fasify_blog
+db_username: yarik
+db_password: yarik2105

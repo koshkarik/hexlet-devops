@@ -1,0 +1,49 @@
+- hosts: all
+
+  vars_files:
+    - vars/main.yml
+
+  roles:
+    - role: geerlingguy.nodejs 
+      become: true
+      become_method: sudo
+    
+    - role: geerlingguy.postgresql
+      become: true
+      become_method: sudo
+
+  tasks:
+    - name: install git
+      ansible.builtin.apt:
+        name: git
+      become: true
+
+    - name: check directory
+      stat:
+        path: /var/www/js-fastiry-blog
+      register: blog_path
+
+    - name: download repository
+      ansible.builtin.git:
+        repo: https://github.com/hexlet-components/js-fastify-blog.git
+        dest: /var/www
+      when: blog_path.stat.exists
+      become: true
+
+    - name: install dependancies
+      ansible.builtin.shell:
+        chdir: /var/www/js-fastify-blog
+        cmd: npm install
+      become: true
+
+    - name: copy env file
+      ansible.builtin.template:
+        src: templates/env.j2
+        dest: /var/www/js-fastify-blog/.env
+      become: true
+
+    - name: init blog
+      ansible.builtin.shell:
+        chdir: /var/www/js-fastify-blog
+        cmd: npm run prestart
+      become: true
