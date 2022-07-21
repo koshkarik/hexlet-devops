@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  redmine:
+    image: redmine
+    restart: always
+    ports:
+      - 8080:3000
+    environment:
+      POSTGRES_PASSWORD: "strong_pass"
+      POSTGRES_DB: "redmine"
+      PGDATA: "/var/lib/postgresql/data"
+    depends_on:
+      - db
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      REDMINE_DB_POSTGRES: "postgres"
+      REDMINE_DB_USERNAME: "postgres"
+      REDMINE_DB_PASSWORD: "strong_pass"
+      REDMINE_DB_DATABASE: "redmine"
+      REDMINE_SECRET_KEY_BASE: "…"
